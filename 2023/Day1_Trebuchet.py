@@ -36,7 +36,7 @@ def part_two():
         for pat in patterns:
             text_to_digit = ""
             index = KMPSearch(pat, line)
-            if index is not None:
+            if index != []:
                 if pat == "one":
                     text_to_digit = "1"
                 elif pat == "two":
@@ -56,8 +56,8 @@ def part_two():
                 elif pat == "nine":
                     text_to_digit = "9"
 
-                digits_spelled += text_to_digit
-                spelled_index.append(index)
+                digits_spelled += text_to_digit * len(index)
+                spelled_index.extend(index)
 
         spelled = len(spelled_index) > 0
         if spelled:
@@ -90,6 +90,21 @@ def part_two():
                 for ind, numb in enumerate(numbers_index):
                     if numbers_last == numb:
                         last = digits_numbers[ind]
+
+        elif spelled and not numbers:
+            for ind, numb in enumerate(spelled_index):
+                if spelled_first == numb:
+                    first = digits_spelled[ind]
+            for ind, numb in enumerate(spelled_index):
+                if spelled_last == numb:
+                    last = digits_spelled[ind]
+        elif not spelled and numbers:
+            for ind, numb in enumerate(numbers_index):
+                if numbers_first == numb:
+                    first = digits_numbers[ind]
+            for ind, numb in enumerate(numbers_index):
+                if numbers_last == numb:
+                    last = digits_numbers[ind]
 
         sum_total += int(first + last)
 
